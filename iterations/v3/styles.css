@@ -1,0 +1,37 @@
+:root {
+  --bg: #f5f6f8; --card: #fff; --text: #1c1f24; --muted: #6b7280; --line: #e3e5e9;
+  --critical: #c62828; --high: #e65100; --watch: #b8860b; --low: #2e7d32;
+}
+* { box-sizing: border-box; }
+body { margin: 0 auto; padding: 16px; max-width: 760px; font: 15px/1.45 system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); }
+.muted { color: var(--muted); }
+
+h1 { margin: 8px 0 2px; font-size: 22px; }
+.provenance { margin: 0 0 16px; font-size: 13px; color: var(--muted); }
+.sim { font-weight: 700; color: #7a4f00; }
+.live { font-weight: 700; color: #1b5e20; }
+
+.tier-critical { --tier: var(--critical); } .tier-high { --tier: var(--high); }
+.tier-watch { --tier: var(--watch); } .tier-low { --tier: var(--low); }
+.tier { font-weight: 800; color: var(--tier); letter-spacing: .03em; }
+
+.card { background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--tier); border-radius: 4px; padding: 16px 18px; margin-bottom: 12px; }
+.head { font-weight: 600; }
+.buffer { margin-top: 12px; font-size: 52px; font-weight: 800; line-height: 1; color: var(--tier); }
+.label { color: var(--muted); font-size: 13px; }
+.timeline { margin-top: 8px; font-size: 14px; font-weight: 600; }
+.why { margin: 12px 0 0; font-size: 16px; }
+.next { margin-top: 12px; padding: 10px 12px; background: #f7f8fa; border: 1px solid var(--line); border-radius: 4px; font-size: 14px; }
+.next-title { font-weight: 700; margin-bottom: 2px; }
+.small { font-size: 12px; margin-top: 4px; }
+
+.weather { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+.weather-title { font-weight: 600; margin-bottom: 6px; }
+.wx-grid { display: flex; flex-wrap: wrap; gap: 8px 32px; }
+.wx b { color: var(--text); }
+.elevated { color: var(--critical); font-weight: 600; }
+
+.row { background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--tier); border-radius: 4px; padding: 8px 14px; margin-bottom: 8px; font-size: 14px; }
+
+footer { margin-top: 20px; font-size: 12px; color: var(--muted); }
+footer a { color: inherit; }
