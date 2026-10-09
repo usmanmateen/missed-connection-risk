@@ -11,6 +11,11 @@ h1 { margin: 8px 0 2px; font-size: 22px; }
 .sim { font-weight: 700; color: #7a4f00; }
 .live { font-weight: 700; color: #1b5e20; }
 
+.scenarios { margin: -8px 0 16px; font-size: 12px; color: var(--muted); }
+.scenarios button { font: inherit; margin-left: 6px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 3px; background: #fff; color: var(--text); cursor: pointer; }
+.scenarios button[aria-pressed="true"] { background: var(--text); color: #fff; border-color: var(--text); }
+.none { margin: 0 0 10px; font-size: 15px; }
+
 .tier-critical { --tier: var(--critical); } .tier-high { --tier: var(--high); }
 .tier-watch { --tier: var(--watch); } .tier-low { --tier: var(--low); }
 .tier { font-weight: 800; color: var(--tier); letter-spacing: .03em; }

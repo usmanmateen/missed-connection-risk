@@ -9,6 +9,18 @@ times alongside it.
 It's the screen a support agent would see when a risky connection is flagged. That's the output
 of the process, not the whole automation.
 
+## Scenarios
+
+A small switcher at the top swaps between three sets of simulated bookings. Weather stays live
+in all of them.
+
+- **Mixed** (default): one CRITICAL booking, one WATCH, one LOW.
+- **Busy evening** (`?scenario=busy`): three CRITICAL bookings, ordered by the smallest projected
+  connection, plus one HIGH and one WATCH. Two of these bookings are on the same delayed flight
+  but have different onward connections, so one is HIGH and the other only WATCH.
+- **Quiet day** (`?scenario=quiet`): nothing needs an agent, so the screen says so and only
+  lists what it's still monitoring.
+
 ## Real and simulated data
 
 - **Weather is live:** the Open-Meteo hourly forecast for LHR at the delayed departure hour and
@@ -23,6 +35,9 @@ of the process, not the whole automation.
 - **Projected connection** = scheduled connection − inbound delay. That's a simplification. A
   real version would use the expected onward departure minus the predicted inbound arrival.
 - **Risk levels** are placeholders: CRITICAL under 20 min, HIGH 20–44, WATCH 45–59, LOW 60+.
+  CRITICAL and HIGH get the full card; WATCH and LOW stay as one-line rows.
+- **Order:** risk level first, then the smallest projected connection, then the earliest onward
+  departure.
 - **The severe-weather check** uses placeholder thresholds: wind ≥ 50 km/h, gusts ≥ 70 km/h,
   precipitation ≥ 8 mm/h, or a severe WMO weather code. It's shown alongside the booking and
   never changes the risk level.
@@ -37,7 +52,7 @@ Three snapshots, taken from the real commits in this repo:
   I stripped it back to the core question: which booking is at risk, and why?
 - **V3** ([iterations/v3](https://usmanmateen.github.io/missed-connection-risk/iterations/v3/), commit `715dceb`):
   I realised an agent also needed to know what to do next, so I added only the timeline and
-  next-step guidance. This is the version at the main link.
+  next-step guidance. The main link is V3 plus a switcher between simulated scenarios.
 
 The snapshots are as committed. The only edit is in V1, where one sentence on the page and one
 code comment originally named the company that set the exercise. That word is replaced with

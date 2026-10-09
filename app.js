@@ -4,6 +4,10 @@
 const LOADED_AT = Date.now();
 let weather = { state: "loading", byAirport: {}, fetchedAt: null };
 
+// Simulated scenario, chosen with ?scenario=busy etc. Defaults to "mixed".
+const requested = new URLSearchParams(location.search).get("scenario");
+let scenario = SCENARIOS[requested] ? requested : "mixed";
+
 const codes = Object.keys(AIRPORTS);
 const WEATHER_URL =
   "https://api.open-meteo.com/v1/forecast" +
@@ -40,7 +44,7 @@ function assess(booking) {
     { code: inbound.from, when: at(inbound.depMin + inbound.delayMin), label: "departure" },
     { code: inbound.to, when: at(inbound.arrMin + inbound.delayMin), label: "arrival" },
   ].filter((p) => AIRPORTS[p.code]);
-  return { booking, inbound, onward, scheduledConnection, buffer, tier: classifyBuffer(buffer), checkpoints };
+  return { booking, inbound, onward, scheduledConnection, buffer, tier: classifyBuffer(buffer), checkpoints, onwardDepMin: onward.depMin };
 }
 
 // Open-Meteo hourly value for the hour nearest `when` (times are GMT, "YYYY-MM-DDTHH:00").
@@ -105,10 +109,15 @@ const row = (a) =>
   `<div class="row tier-${a.tier.toLowerCase()}"><span class="tier">${a.tier}</span> — ${a.booking.ref} — ${a.buffer} min projected connection</div>`;
 
 function render() {
-  const assessed = BOOKINGS.map(assess).sort((x, y) => TIER_ORDER[x.tier] - TIER_ORDER[y.tier]);
+  document.getElementById("scenarios").innerHTML = "Simulated scenario: " +
+    Object.entries(SCENARIOS).map(([key, s]) =>
+      `<button data-scenario="${key}"${key === scenario ? ' aria-pressed="true"' : ""}>${s.label}</button>`).join("");
+
+  const assessed = SCENARIOS[scenario].bookings.map(assess).sort(byUrgency);
   const atRisk = (a) => a.tier === "CRITICAL" || a.tier === "HIGH";
+  const urgent = assessed.filter(atRisk);
   document.getElementById("cards").innerHTML =
-    assessed.filter(atRisk).map(card).join("") +
+    (urgent.length ? urgent.map(card).join("") : `<p class="none">No connections need an agent right now. Still monitoring:</p>`) +
     assessed.filter((a) => !atRisk(a)).map(row).join("");
 
   document.getElementById("source").innerHTML =
@@ -116,6 +125,16 @@ function render() {
       ? `Weather: Open-Meteo hourly forecast, fetched ${hhmm(weather.fetchedAt)} UTC · <a href="${WEATHER_URL}" target="_blank" rel="noopener">raw data</a>`
       : "";
 }
+
+document.addEventListener("click", (e) => {
+  const key = e.target.dataset.scenario;
+  if (!key) return;
+  scenario = key;
+  const url = new URL(location.href);
+  if (key === "mixed") url.searchParams.delete("scenario"); else url.searchParams.set("scenario", key);
+  history.replaceState(null, "", url);
+  render();
+});
 
 render();
 loadWeather();

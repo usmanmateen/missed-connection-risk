@@ -30,6 +30,12 @@ function classifyBuffer(bufferMin) {
   return "LOW";
 }
 
+// Order for the screen: risk level first, then the smallest projected connection,
+// then the earliest onward departure.
+function byUrgency(a, b) {
+  return TIER_ORDER[a.tier] - TIER_ORDER[b.tier] || a.buffer - b.buffer || a.onwardDepMin - b.onwardDepMin;
+}
+
 // Takes one hourly forecast point; returns human-readable reasons (empty = no signal).
 function weatherReasons(w) {
   const r = [];
@@ -41,5 +47,5 @@ function weatherReasons(w) {
 }
 
 if (typeof module !== "undefined") {
-  module.exports = { BUFFER_THRESHOLDS, WEATHER_THRESHOLDS, TIER_ORDER, projectedBuffer, classifyBuffer, weatherReasons };
+  module.exports = { BUFFER_THRESHOLDS, WEATHER_THRESHOLDS, TIER_ORDER, projectedBuffer, classifyBuffer, weatherReasons, byUrgency };
 }
