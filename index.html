@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Disruption Watch</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <div class="brand">Disruption Watch · assessment prototype (invented scenario)</div>
+      <h1>Missed-connection risk</h1>
+    </div>
+    <button id="refresh">Refresh live weather</button>
+  </header>
+
+  <div class="sources">
+    <span class="pill sim">SIMULATED</span> Bookings &amp; flight status (stand-in for backend + status feed; unconfirmed)
+    <span class="pill live">LIVE</span> Weather from Open-Meteo · <span id="weather-status"></span>
+    · <a id="raw-link" target="_blank" rel="noopener">raw response</a>
+    <div class="muted">Risk thresholds and the buffer calculation are prototype simplifications for the exercise, not Perk rules. See README.</div>
+  </div>
+
+  <div id="summary" class="summary"></div>
+  <main id="cards"></main>
+
+  <script src="risk.js"></script>
+  <script src="bookings.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
