@@ -78,12 +78,21 @@ function weatherSection(a) {
 const route = (a) => `${a.booking.legs.map((l) => l.from).join(" → ")} → ${a.onward.to}`;
 
 function card(a) {
-  const { booking, inbound, buffer, scheduledConnection, tier } = a;
+  const { booking, inbound, onward, buffer, scheduledConnection, tier } = a;
+  // Same simplification as the buffer: the onward flight's scheduled departure is used.
+  const arrives = at(inbound.arrMin + inbound.delayMin);
+  const departs = at(onward.depMin);
   return `<article class="card tier-${tier.toLowerCase()}">
     <div class="head"><span class="tier">${tier}</span> — ${booking.ref} — ${route(a)}</div>
     <div class="buffer">${buffer} min</div>
     <div class="label">projected connection remaining</div>
+    <div class="timeline">${inbound.flight} projected arrival ${inbound.to} ${hhmm(arrives)} UTC → ${onward.flight} departure ${hhmm(departs)} UTC → ${buffer} min projected connection</div>
     <p class="why">${inbound.flight} is delayed ${inbound.delayMin} min. The original ${scheduledConnection} min connection at ${inbound.to} is now projected to be ${buffer} min.</p>
+    <div class="next">
+      <div class="next-title">Agent next step</div>
+      <div>Review this booking now. Verify the latest flight status and check the available onward options before contacting the traveller or changing the itinerary.</div>
+      <div class="muted small">No action is taken automatically.</div>
+    </div>
     <div class="weather">
       <div class="weather-title">Live weather around journey time</div>
       ${weatherSection(a)}

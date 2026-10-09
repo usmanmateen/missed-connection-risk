@@ -19,7 +19,11 @@ h1 { margin: 8px 0 2px; font-size: 22px; }
 .head { font-weight: 600; }
 .buffer { margin-top: 12px; font-size: 52px; font-weight: 800; line-height: 1; color: var(--tier); }
 .label { color: var(--muted); font-size: 13px; }
+.timeline { margin-top: 8px; font-size: 14px; font-weight: 600; }
 .why { margin: 12px 0 0; font-size: 16px; }
+.next { margin-top: 12px; padding: 10px 12px; background: #f7f8fa; border: 1px solid var(--line); border-radius: 4px; font-size: 14px; }
+.next-title { font-weight: 700; margin-bottom: 2px; }
+.small { font-size: 12px; margin-top: 4px; }
 
 .weather { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
 .weather-title { font-weight: 600; margin-bottom: 6px; }
