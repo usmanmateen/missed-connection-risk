@@ -1,5 +1,5 @@
 // Risk rules. Pure functions, no DOM, so they can be tested with `node risk.test.js`.
-// All thresholds are PROTOTYPE ASSUMPTIONS for the exercise, not Perk production
+// All thresholds are PROTOTYPE ASSUMPTIONS for the exercise, not real production
 // values and not airport-specific minimum connection times (MCTs).
 
 const BUFFER_THRESHOLDS = { critical: 20, high: 45, watch: 60 }; // minutes
